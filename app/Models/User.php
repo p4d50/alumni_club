@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Enum\ApprovalStatus;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approval_status' => ApprovalStatus::class,
+        'approved_at' => 'datetime',
         'password' => 'hashed',
     ];
 }
