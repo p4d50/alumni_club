@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enum\ApprovalStatus;
+use App\Enum\Role;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'password',
         'approval_status',
         'approved_at',
+        'role',
     ];
 
     /**
@@ -45,6 +47,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'approval_status' => ApprovalStatus::class,
         'approved_at' => 'datetime',
+        'role' => Role::class,
         'password' => 'hashed',
     ];
+
+    /**
+     * Check if user is admin
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool {
+        return $this->role === Role::Admin;
+    }
 }
