@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,9 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified', 'approved'])->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $unapproved = User::unapproved()->get();
+
+    return view('dashboard', compact('unapproved'));
 })->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +37,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/not-approved', function () {
     return view('not-approved');
-})->middleware(['auth', 'approved'])->name('not-approved');
+})->middleware(['auth'])->name('not-approved');
 
 require __DIR__.'/auth.php';

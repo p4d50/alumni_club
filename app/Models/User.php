@@ -59,4 +59,11 @@ class User extends Authenticatable
     public function isAdmin(): bool {
         return $this->role === Role::Admin;
     }
+
+    /**
+     * Query users by approval
+     */
+    public function scopeUnapproved($query) {
+        return $query->where('approval_status', ApprovalStatus::Unapproved);
+    }
 }

@@ -18,7 +18,7 @@ class EnsureUserIsApproved
     {
         if (auth()->user()->approval_status != ApprovalStatus::Unapproved) {
             if ($request->route()->uri == 'not-approved') {
-                return redirect()->route('dashboard');
+                return redirect()->route('home');
             } else {
                 return $next($request);
             }
