@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApprovalController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +27,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard');
 
-Route::get('/dashboard/approvals', function () {
-    $unapproved = User::unapproved()->get();
-
-    return view('approvals', compact('unapproved'));
-})->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals');
+Route::get('/dashboard/approvals', [ApprovalController::class, 'dashboard'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals');
+Route::get('/dashboard/approvals/{user:id}', [ApprovalController::class, 'each'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals.each');
+Route::get('/dashboard/approvals/{user:id}/approve', [ApprovalController::class, 'approveUser'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals.each.approve');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
