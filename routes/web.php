@@ -24,10 +24,14 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified', 'approved'])->name('home');
 
 Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard');
+
+Route::get('/dashboard/approvals', function () {
     $unapproved = User::unapproved()->get();
 
-    return view('dashboard', compact('unapproved'));
-})->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard');
+    return view('approvals', compact('unapproved'));
+})->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
