@@ -3,10 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\ApprovalDocument;
 use App\Enum\ApprovalStatus;
 use App\Enum\Role;
 
@@ -61,9 +64,21 @@ class User extends Authenticatable
     }
 
     /**
-     * Query users by approval
+     * Query all unapproved users
+     * 
+     * @param Illuminate\Database\Eloquent\Builder $query
+     * @return Illuminate\Database\Eloquent\Builder
      */
-    public function scopeUnapproved($query) {
+    public function scopeUnapproved(Builder $query): Builder {
         return $query->where('approval_status', ApprovalStatus::Unapproved);
+    }
+
+    /**
+     * User approval document
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function approvalDocuments(): HasOne {
+        return $this->hasOne(ApprovalDocument::class);
     }
 }
