@@ -64,6 +64,13 @@ class User extends Authenticatable
     }
 
     /**
+     * @return bool
+     */
+    public function isApproved(): bool {
+        return $this->approval_status == ApprovalStatus::Approved && $this->approved_at != null;
+    }
+
+    /**
      * Query all unapproved users
      * 
      * @param Illuminate\Database\Eloquent\Builder $query
@@ -78,7 +85,14 @@ class User extends Authenticatable
      * 
      * @return Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function approvalDocuments(): HasOne {
+    public function approvalDocument(): HasOne {
         return $this->hasOne(ApprovalDocument::class);
+    }
+
+    /**
+     * 
+     */
+    public function hasApprovalDocument(): bool {
+        return $this->approvalDocument()->exists();
     }
 }
