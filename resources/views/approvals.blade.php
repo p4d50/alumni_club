@@ -17,27 +17,30 @@
                 <span class="font-medium">Success alert!</span> {{ Session::get('success') }}
             </div>
         @endif
-
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="w-[48px] px-6 py-3">#</th>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Created at</th>
-                    <th scope="col" class="px-6 py-3"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($unapproved as $u)
-                <tr>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->id }}</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->name }}</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->created_at->diffForHumans() }}</td>
-                    <td><a class="text-blue-500 hover:underline" href="/dashboard/approvals/{{ $u->id }}">See Ticket</a></td>
-                </tr>
-                @endforeach
-                <!-- TODO: Do no results! -->
-            </tbody>
-        </table>
+        
+        @if (count($unapproved) != 0)
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="w-[48px] px-6 py-3">#</th>
+                        <th scope="col" class="px-6 py-3">Name</th>
+                        <th scope="col" class="px-6 py-3">Created at</th>
+                        <th scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($unapproved as $u)
+                    <tr>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->id }}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->name }}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $u->created_at->diffForHumans() }}</td>
+                        <td><a class="text-blue-500 hover:underline" href="/dashboard/approvals/{{ $u->id }}">See Ticket</a></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p class="py-6 text-xl font-bold text-center">No new approvals found!</p>
+        @endif
     </div>
 </x-dashboard-layout>
