@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/approvals', [ApprovalController::class, 'dashboard'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals');
 Route::get('/dashboard/approvals/{user:id}', [ApprovalController::class, 'each'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals.each');
 Route::get('/dashboard/approvals/{user:id}/approve', [ApprovalController::class, 'approveUser'])->middleware(['auth', 'verified', 'approved', 'admin'])->name('dashboard.approvals.each.approve');
+Route::post('/approvals/submit', [ApprovalController::class, 'submit'])->middleware(['auth', 'verified'])->name('approvals.submit');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

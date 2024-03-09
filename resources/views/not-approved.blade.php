@@ -13,7 +13,9 @@
                     @if (auth()->user()->hasApprovalDocument())
                         <span>You are currently unapproved, wait until administrator let you in.</span>
                     @else
-                        <form>
+                        <form action="{{ route('approvals.submit') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+
                             <div class="mb-6">
                                 <select name="type" class="block">
                                     <option value="index">Index</option>
@@ -23,6 +25,7 @@
                             <div class="mb-6">
                                 <input type="file" name="file">
                             </div>
+
                             <button type="submit" class="block px-3 py-2 bg-blue-500 text-white cursor-pointer">Submit Approval</button>
                         </form>
                     @endif

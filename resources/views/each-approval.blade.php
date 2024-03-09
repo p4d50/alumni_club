@@ -11,6 +11,10 @@
       {{ $user->name }}'s Approval
     </span>
 
+    @if ($user->hasApprovalDocument())
+      <img src="http://localhost:8000/storage{{ $user->approvalDocument->path_to_document }}" alt="asd" class="w-full">
+    @endif
+    
     <a class="inline-block px-4 py-2 bg-blue-500 text-white rounded-md" href="/dashboard/approvals/{{ $user->id }}/approve">Approve</a>
   </div>
 </x-dashboard-layout>
